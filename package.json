@@ -1,5 +1,5 @@
 {
-  "name": "application-name",
+  "name": "cartapac.io",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -12,6 +12,7 @@
     "nedb": "~0.10.0",
     "underscore": "~1.5.2",
     "slug": "~0.4.0",
-    "mustache": "~0.8.1"
+    "mustache": "~0.8.1",
+    "ftp-deploy": "~0.4.1"
   }
 }
