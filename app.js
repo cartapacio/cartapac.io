@@ -1,16 +1,25 @@
-
-/**
- * Module dependencies.
- */
-
+// Libs
 var express = require('express');
 var Resource = require('express-resource');
+var http = require('http');
+var path = require('path')
+var Datastore = require('nedb')
+
+// Routes
 var routes = require('./routes');
 var htmlWriter = require('./routes/htmlWriter');
 var ftpUploader = require('./routes/ftpUploader');
 var user = require('./routes/user');
-var http = require('http');
-var path = require('path');
+
+// app
+var config = require('./config')
+var global = require('./globals')
+
+// globals
+global.db = new Datastore({
+	filename: path.resolve(__dirname, '..', config.database_path),
+	autoload: true
+})
 
 var app = express();
 
@@ -39,7 +48,7 @@ app.get('/deployFTP', ftpUploader.deploy);
 
 // API for database actions
 app.resource('api/artwork', require('./routes/artwork'))
-//app.resource('api/ftp', require('./routes/ftp'))
+app.resource('api/ftp', require('./routes/ftp'))
 
 
 http.createServer(app).listen(app.get('port'), function(){
