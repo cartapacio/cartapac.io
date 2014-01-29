@@ -1,15 +1,10 @@
 var path = require('path')
 var config = require('../config')
-var Datastore = require('nedb')
+var global = require('../globals')
 var FtpDeploy = require('ftp-deploy');
 
 function findFtpConfig(callback){
-	var db = new Datastore({
-		filename: path.resolve(__dirname, '..', config.database_path),
-		autoload: true
-	})
-
-	db.findOne({type: 'ftp_config'}, function(err, docs){
+	global.db.findOne({type: 'ftp_config'}, function(err, docs){
 		callback(err,docs)
 	})
 }

@@ -1,13 +1,9 @@
-
-/*
- * GET home page.
- */
-
 exports.write = function(req, res){
 	res.render('index', { title: 'Cartapac.io | html writer' })
 
 	// Dependencies
 	var config = require('../config')
+	var global = require('../globals')
 	var path = require('path')
 	var fs = require('fs')
 	var _ = require('underscore')
@@ -17,15 +13,8 @@ exports.write = function(req, res){
 	var mustache = require('mustache')
 	var tpl_root = path.resolve(__dirname, '..', 'basic_template')
 
-	// Local db connection
-	var Datastore = require('nedb')
-	var db = new Datastore({
-			filename: path.resolve(__dirname, '..', config.database_path),
-			autoload: true
-		})
-
 	// find all the projects
-	db.find({type: 'project'}, function(err, docs){
+	global.db.find({type: 'project'}, function(err, docs){
 		if (err){
 			console.log(err)
 		}
