@@ -4,6 +4,7 @@
  */
 
 var express = require('express');
+var Resource = require('express-resource');
 var routes = require('./routes');
 var htmlWriter = require('./routes/htmlWriter');
 var ftpUploader = require('./routes/ftpUploader');
@@ -35,6 +36,10 @@ app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/writeHtml', htmlWriter.write);
 app.get('/deployFTP', ftpUploader.deploy);
+
+// API for database actions
+app.resource('api/artwork', require('./routes/artwork'))
+//app.resource('api/ftp', require('./routes/ftp'))
 
 
 http.createServer(app).listen(app.get('port'), function(){

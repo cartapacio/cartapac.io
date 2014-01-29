@@ -13,6 +13,13 @@
     "underscore": "~1.5.2",
     "slug": "~0.4.0",
     "mustache": "~0.8.1",
-    "ftp-deploy": "~0.4.1"
+    "ftp-deploy": "~0.4.1",
+    "express-resource": "~1.0.0",
+    "debug": "~0.7.4"
+  },
+  "devDependencies": {
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt": "~0.4.2",
+    "grunt-express-server": "~0.4.11"
   }
 }
