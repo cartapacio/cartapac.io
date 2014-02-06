@@ -1,0 +1,27 @@
+{
+  "name": "cartapacio",
+  "version": "0.0.1",
+  "homepage": "https://github.com/cartapacio/cartapac.io",
+  "authors": [
+    "(decolector <cmart@decolector.net>",
+    "z3a <zea@randomlab.net>)"
+  ],
+  "description": "the portfolio generator for the contemporary artist",
+  "main": "index.html",
+  "keywords": [
+    "portfolio",
+    "art",
+    "generator",
+    "html"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ]
+}

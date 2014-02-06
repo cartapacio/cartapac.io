@@ -3,21 +3,25 @@
   "version": "0.0.0",
   "description": "",
   "keywords": [],
-  "main":"app/views/index.html",
-  
-    "homepage": "https://github.com/cartapacio/cartapacio",
-    "bugs": "https://github.com/cartapacio/cartapacio/issues",
-    "author": {
-      "name": "",
-      "email": "",
-      "url": "https://github.com/cartapacio"
-    },
-    "repository": {
-      "type": "git",
-      "url": "git://github.com/cartapacio/cartapacio.git"
-    },
-  
-  "dependencies": {},
+  "main": "app/index.html",
+  "homepage": "https://github.com/cartapacio/cartapacio",
+  "bugs": "https://github.com/cartapacio/cartapacio/issues",
+  "author": {
+    "name": "",
+    "email": "",
+    "url": "https://github.com/cartapacio"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cartapacio/cartapacio.git"
+  },
+  "dependencies": {
+    "backbone": "~1.1.0",
+    "backbone.nedb": "0.0.2",
+    "nedb": "~0.10.1",
+    "underscore": "~1.5.2",
+    "jquery": "~2.1.0"
+  },
   "devDependencies": {
     "matchdep": "~0.1.1",
     "grunt": "~0.4.1",
