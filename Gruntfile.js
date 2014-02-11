@@ -1,204 +1,364 @@
-/*jshint camelcase: false*/
-// Generated on 2013-08-01 using generator-chrome-extension 0.2.3
+'use strict';
+var LIVERELOAD_PORT = 35729;
+var SERVER_PORT = 9000;
+var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
+var mountFolder = function (connect, dir) {
+    return connect.static(require('path').resolve(dir));
+};
+
+// # Globbing
+// for performance reasons we're only matching one level down:
+// 'test/spec/{,*/}*.js'
+// use this if you want to match all subfolders:
+// 'test/spec/**/*.js'
+// templateFramework: 'handlebars'
 
 module.exports = function (grunt) {
-  'use strict';
+    // show elapsed time at the end
+    require('time-grunt')(grunt);
+    // load all grunt tasks
+    require('load-grunt-tasks')(grunt);
 
-  // load all grunt tasks
-  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+    // configurable paths
+    var yeomanConfig = {
+        app: 'app',
+        dist: 'dist'
+    };
 
-  // configurable paths
-  var config = {
-    app: 'app',
-    dist: 'dist',
-    tmp: 'tmp',
-    resources: 'resources'
-  };
-
-  grunt.initConfig({
-    config: config,
-    clean: {
-      dist: {
-        files: [{
-          dot: true,
-          src: [
-            '<%= config.dist %>/*',
-            '<%= config.tmp %>/*'
-          ]
-        }]
-      }
-    },
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc'
-      },
-      files: '<%= config.app %>/js/*.js'
-    },
-    copy: {
-      appLinux: {
-        files: [{
-          expand: true,
-          cwd: '<%= config.app %>',
-          dest: '<%= config.dist %>/app.nw',
-          src: '**'
-        }]
-      },
-      appMacos: {
-        files: [{
-          expand: true,
-          cwd: '<%= config.app %>',
-          dest: '<%= config.dist %>/node-webkit.app/Contents/Resources/app.nw',
-          src: '**'
+    grunt.initConfig({
+        yeoman: yeomanConfig,
+        watch: {
+            options: {
+                nospawn: true,
+                livereload: true
+            },
+            coffee: {
+                files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
+                tasks: ['coffee:dist']
+            },
+            coffeeTest: {
+                files: ['test/spec/{,*/}*.coffee'],
+                tasks: ['coffee:test']
+            },
+            livereload: {
+                options: {
+                    livereload: LIVERELOAD_PORT
+                },
+                files: [
+                    '<%= yeoman.app %>/*.html',
+                    '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
+                    '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
+                    '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
+                    '<%= yeoman.app %>/scripts/templates/*.{ejs,mustache,hbs}',
+                    'test/spec/**/*.js'
+                ]
+            },
+            handlebars: {
+                files: [
+                    '<%= yeoman.app %>/scripts/templates/*.hbs'
+                ],
+                tasks: ['handlebars']
+            },
+            test: {
+                files: ['<%= yeoman.app %>/scripts/{,*/}*.js', 'test/spec/**/*.js'],
+                tasks: ['test:true']
+            }
         },
-          {
-            expand: true,
-            cwd: '<%= config.resources %>/mac-files/',
-            dest: '<%= config.dist %>/node-webkit.app/Contents/',
-            filter: 'isFile',
-            src: '*.plist'
-          },
-          {
-            expand: true,
-            cwd: '<%= config.resources %>/mac-files/',
-            dest: '<%= config.dist %>/node-webkit.app/Contents/Resources/',
-            filter: 'isFile',
-            src: '*.icns'
-          }]
-      },
-      webkit: {
-        files: [{
-          expand: true,
-          cwd: '<%=config.resources %>/node-webkit/MacOS',
-          dest: '<%= config.dist %>/',
-          src: '**'
-        }]
-      },
-      copyWinToTmp: {
-        files: [{
-          expand: true,
-          cwd: '<%= config.resources %>/node-webkit/Windows/',
-          dest: '<%= config.tmp %>/',
-          src: '**'
-        }]
-      }
-    },
-    compress: {
-      appToTmp: {
-        options: {
-          archive: '<%= config.tmp %>/app.zip'
+        connect: {
+            options: {
+                port: SERVER_PORT,
+                // change this to '0.0.0.0' to access the server from outside
+                hostname: 'localhost'
+            },
+            livereload: {
+                options: {
+                    middleware: function (connect) {
+                        return [
+                            lrSnippet,
+                            mountFolder(connect, '.tmp'),
+                            mountFolder(connect, yeomanConfig.app)
+                        ];
+                    }
+                }
+            },
+            test: {
+                options: {
+                    port: 9001,
+                    middleware: function (connect) {
+                        return [
+                            lrSnippet,
+                            mountFolder(connect, '.tmp'),
+                            mountFolder(connect, 'test'),
+                            mountFolder(connect, yeomanConfig.app)
+                        ];
+                    }
+                }
+            },
+            dist: {
+                options: {
+                    middleware: function (connect) {
+                        return [
+                            mountFolder(connect, yeomanConfig.dist)
+                        ];
+                    }
+                }
+            }
         },
-        files: [
-          {
-            expand: true,
-            cwd:'<%= config.app %>',
-            src: ['**']
-          }
-        ]
-      },
-      finalWindowsApp: {
-        options: {
-          archive: '<%= config.dist %>/cartapacio.zip'
+        open: {
+            server: {
+                path: 'http://localhost:<%= connect.options.port %>'
+            },
+            test: {
+                path: 'http://localhost:<%= connect.test.options.port %>'
+            }
         },
-        files: [
-          {
-            expand: true,
-            cwd:'<%= config.tmp %>',
-            src: ['**']
-          }
-        ]
-      }
-    },
-    rename: {
-      app: {
-        files: [
-          {
-            src: '<%= config.dist %>/node-webkit.app',
-            dest: '<%= config.dist %>/cartapacio.app'
-          }
-        ]
-      },
-      zipToApp: {
-        files: [
-          {
-            src: '<%= config.tmp %>/app.zip',
-            dest: '<%= config.tmp %>/app.nw'
-          }
-        ]
-      }
-    }
-  });
-
-  grunt.registerTask('chmod', 'Add lost Permissions.', function () {
-    var fs = require('fs');
-    fs.chmodSync('dist/cartapacio.app/Contents/Frameworks/node-webkit Helper EH.app/Contents/MacOS/node-webkit Helper EH', '555');
-    fs.chmodSync('dist/cartapacio.app/Contents/Frameworks/node-webkit Helper NP.app/Contents/MacOS/node-webkit Helper NP', '555');
-    fs.chmodSync('dist/cartapacio.app/Contents/Frameworks/node-webkit Helper.app/Contents/MacOS/node-webkit Helper', '555');
-    fs.chmodSync('dist/cartapacio.app/Contents/MacOS/node-webkit', '555');
-  });
-
-  grunt.registerTask('createLinuxApp', 'Create linux distribution.', function () {
-    var fs = require('fs');
-    var childProcess = require('child_process');
-    var exec = childProcess.exec;
-    exec('mkdir dist; cp resources/node-webkit/linux_ia64/nw.pak dist/ && cp resources/node-webkit/linux_ia64/nw dist/node-webkit && cp resources/linux/qq dist/qq && chmod a+x dist/qq; touch dist/ready', function (error, stdout, stderr) {
-      console.log(stderr, stdout, error);
+        clean: {
+            dist: ['.tmp', '<%= yeoman.dist %>/*'],
+            server: '.tmp'
+        },
+        jshint: {
+            options: {
+                jshintrc: '.jshintrc',
+                reporter: require('jshint-stylish')
+            },
+            all: [
+                'Gruntfile.js',
+                '<%= yeoman.app %>/scripts/{,*/}*.js',
+                '!<%= yeoman.app %>/scripts/vendor/*',
+                'test/spec/{,*/}*.js'
+            ]
+        },
+        mocha: {
+            all: {
+                options: {
+                    run: true,
+                    urls: ['http://localhost:<%= connect.test.options.port %>/index.html']
+                }
+            }
+        },
+        coffee: {
+            dist: {
+                files: [{
+                    // rather than compiling multiple files here you should
+                    // require them into your main .coffee file
+                    expand: true,
+                    cwd: '<%= yeoman.app %>/scripts',
+                    src: '{,*/}*.coffee',
+                    dest: '.tmp/scripts',
+                    ext: '.js'
+                }]
+            },
+            test: {
+                files: [{
+                    expand: true,
+                    cwd: 'test/spec',
+                    src: '{,*/}*.coffee',
+                    dest: '.tmp/spec',
+                    ext: '.js'
+                }]
+            }
+        },
+        requirejs: {
+            dist: {
+                // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
+                options: {
+                    baseUrl: '<%= yeoman.app %>/scripts',
+                    optimize: 'none',
+                    paths: {
+                        'templates': '../../.tmp/scripts/templates',
+                        'jquery': '../../app/bower_components/jquery/jquery',
+                        'underscore': '../../app/bower_components/underscore/underscore',
+                        'backbone': '../../app/bower_components/backbone/backbone'
+                    },
+                    // TODO: Figure out how to make sourcemaps work with grunt-usemin
+                    // https://github.com/yeoman/grunt-usemin/issues/30
+                    //generateSourceMaps: true,
+                    // required to support SourceMaps
+                    // http://requirejs.org/docs/errors.html#sourcemapcomments
+                    preserveLicenseComments: false,
+                    useStrict: true
+                    //uglify2: {} // https://github.com/mishoo/UglifyJS2
+                }
+            }
+        },
+        useminPrepare: {
+            html: '<%= yeoman.app %>/index.html',
+            options: {
+                dest: '<%= yeoman.dist %>'
+            }
+        },
+        usemin: {
+            html: ['<%= yeoman.dist %>/{,*/}*.html'],
+            css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+            options: {
+                dirs: ['<%= yeoman.dist %>']
+            }
+        },
+        imagemin: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= yeoman.app %>/images',
+                    src: '{,*/}*.{png,jpg,jpeg}',
+                    dest: '<%= yeoman.dist %>/images'
+                }]
+            }
+        },
+        cssmin: {
+            dist: {
+                files: {
+                    '<%= yeoman.dist %>/styles/main.css': [
+                        '.tmp/styles/{,*/}*.css',
+                        '<%= yeoman.app %>/styles/{,*/}*.css'
+                    ]
+                }
+            }
+        },
+        htmlmin: {
+            dist: {
+                options: {
+                    /*removeCommentsFromCDATA: true,
+                    // https://github.com/yeoman/grunt-usemin/issues/44
+                    //collapseWhitespace: true,
+                    collapseBooleanAttributes: true,
+                    removeAttributeQuotes: true,
+                    removeRedundantAttributes: true,
+                    useShortDoctype: true,
+                    removeEmptyAttributes: true,
+                    removeOptionalTags: true*/
+                },
+                files: [{
+                    expand: true,
+                    cwd: '<%= yeoman.app %>',
+                    src: '*.html',
+                    dest: '<%= yeoman.dist %>'
+                }]
+            }
+        },
+        copy: {
+            dist: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= yeoman.app %>',
+                    dest: '<%= yeoman.dist %>',
+                    src: [
+                        '*.{ico,txt}',
+                        '.htaccess',
+                        'images/{,*/}*.{webp,gif}',
+                        'styles/fonts/{,*/}*.*',
+                    ]
+                }]
+            }
+        },
+        bower: {
+            all: {
+                rjsConfig: '<%= yeoman.app %>/scripts/main.js'
+            }
+        },
+        handlebars: {
+            compile: {
+                options: {
+                    namespace: 'JST',
+                    amd: true
+                },
+                files: {
+                    '.tmp/scripts/templates.js': ['<%= yeoman.app %>/scripts/templates/*.hbs']
+                }
+            }
+        },
+        rev: {
+            dist: {
+                files: {
+                    src: [
+                        '<%= yeoman.dist %>/scripts/{,*/}*.js',
+                        '<%= yeoman.dist %>/styles/{,*/}*.css',
+                        '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
+                        '/styles/fonts/{,*/}*.*',
+                    ]
+                }
+            }
+        }
     });
-    while (!fs.existsSync('dist/ready')) {}
-  });
 
-  grunt.registerTask('createWindowsApp', 'Create windows distribution.', function () {
-    var fs = require('fs');
-    var childProcess = require('child_process');
-    var exec = childProcess.exec;
-    exec('copy /b tmp\\nw.exe+tmp\\app.nw tmp\\cartapacio.exe && del tmp\\app.nw tmp\\nw.exe && echo.>tmp\\ready', function (error, stdout, stderr) {
-      console.log(stderr, stdout, error);
+    grunt.registerTask('createDefaultTemplate', function () {
+        grunt.file.write('.tmp/scripts/templates.js', 'this.JST = this.JST || {};');
     });
-    while (!fs.existsSync('tmp/ready')) {}
-  });
 
-  grunt.registerTask('setVersion', 'Set version to all needed files', function(version){
-    var config = grunt.config.get(['config']);
-    var appPath = config.app;
-    var resourcesPath = config.resources;
-    var mainPackageJSON = grunt.file.readJSON('package.json');
-    var appPackageJSON = grunt.file.readJSON(appPath + '/package.json');
-    var infoPlistTmp = grunt.file.read(resourcesPath + '/mac-files/Info.plist.tmp', {encoding: 'UTF8'});
-    var infoPlist = grunt.template.process(infoPlistTmp, {data: {version: version}});
-    mainPackageJSON.version = version;
-    appPackageJSON.version = version;
-    grunt.file.write('package.json', JSON.stringify(mainPackageJSON, null, 2), {encoding: 'UTF8'});
-    grunt.file.write(appPath + '/package.json', JSON.stringify(appPackageJSON, null, 2), {encoding: 'UTF8'});
-    grunt.file.write(resourcesPath + '/mac-files/Info.plist', infoPlist, {encoding: 'UTF8'});
-  });
+    grunt.registerTask('server', function () {
+        grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
+        grunt.task.run(['serve:' + target]);
+    });
 
-  grunt.registerTask('dist-linux', [
-    'jshint',
-    'clean:dist',
-    'copy:appLinux',
-    'createLinuxApp'
-  ]);
+    grunt.registerTask('serve', function (target) {
+        if (target === 'dist') {
+            return grunt.task.run(['build', 'open:server', 'connect:dist:keepalive']);
+        }
 
-  grunt.registerTask('dist-win', [
-    'jshint',
-    'clean:dist',
-    'copy:copyWinToTmp',
-    'compress:appToTmp',
-    'rename:zipToApp',
-    'createWindowsApp',
-    'compress:finalWindowsApp'
-  ]);
+        if (target === 'test') {
+            return grunt.task.run([
+                'clean:server',
+                'coffee',
+                'createDefaultTemplate',
+                'handlebars',
+                'connect:test',
+                'open:test',
+                'watch:livereload'
+            ]);
+        }
 
-  grunt.registerTask('dist-mac', [
-    'jshint',
-    'clean:dist',
-    'copy:webkit',
-    'copy:appMacos',
-    'rename:app',
-    'chmod'
-  ]);
+        grunt.task.run([
+            'clean:server',
+            'coffee:dist',
+            'createDefaultTemplate',
+            'handlebars',
+            'connect:livereload',
+            'open:server',
+            'watch'
+        ]);
+    });
 
-  grunt.registerTask('check', [
-    'jshint'
-  ]);
+    grunt.registerTask('test', function (isConnected) {
+        isConnected = Boolean(isConnected);
+        var testTasks = [
+                'clean:server',
+                'coffee',
+                'createDefaultTemplate',
+                'handlebars',
+                'connect:test',
+                'mocha',
+                'watch:test'
+            ];
+            
+        if(!isConnected) {
+            return grunt.task.run(testTasks);
+        } else {
+            // already connected so not going to connect again, remove the connect:test task
+            testTasks.splice(testTasks.indexOf('connect:test'), 1);
+            return grunt.task.run(testTasks);
+        }
+    });
 
+    grunt.registerTask('build', [
+        'clean:dist',
+        'coffee',
+        'createDefaultTemplate',
+        'handlebars',
+        'useminPrepare',
+        'requirejs',
+        'imagemin',
+        'htmlmin',
+        'concat',
+        'cssmin',
+        'uglify',
+        'copy',
+        'rev',
+        'usemin'
+    ]);
+
+    grunt.registerTask('default', [
+        'jshint',
+        'test',
+        'build'
+    ]);
 };

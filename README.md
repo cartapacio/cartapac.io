@@ -1,4 +1,4 @@
-cartapac.io
-===========
+##Cartapac.io
 
-The webtool for the contemporary artist
+#The portfolio generator for the contemporary artist
+
