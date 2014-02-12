@@ -12,7 +12,6 @@ define([
         	"" : "home" 
         },
         home: function(){
-        	console.log("this is home");
         	var homeVew = new HomeView();
         }
 

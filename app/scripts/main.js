@@ -1,7 +1,7 @@
 /*global require*/
 'use strict';
 
-requirejs.config({
+require.config({
     shim: {
         underscore: {
             exports: '_'
@@ -26,14 +26,14 @@ requirejs.config({
     },
 
     hbs : {
-        templateExtension : '.hbs',
+        templateExtension : 'hbs',
         // if disableI18n is `true` it won't load locales and the i18n helper
         // won't work as well.
         disableI18n : false
     }
 });
 
-requirejs([
+require([
     'backbone',
     'routes/router'
 ], function (Backbone, AppRouter) {
