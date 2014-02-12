@@ -1,11 +1,9 @@
-/*global define*/
-
 define([
     'jquery',
     'underscore',
     'backbone',
     'handlebars',
-    'hbs!../templates/home'
+    'hbs!templates/home'
 ], function ($, _, Backbone, Handlebars, template) {
     'use strict';
 
@@ -17,7 +15,7 @@ define([
             this.render();
         },
         render: function(){
-        	this.$el.html(template());
+        	this.$el.html(template({title: 'home'}));
         }
     });
 
