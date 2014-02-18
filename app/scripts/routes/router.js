@@ -3,7 +3,7 @@
 define([
     'jquery',
     'backbone',
-    '../views/home'
+    'views/home'
 ], function ($, Backbone, HomeView) {
     'use strict';
 

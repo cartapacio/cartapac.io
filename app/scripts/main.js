@@ -22,7 +22,13 @@ require.config({
         backbone: '../libs/backbone/backbone',
         underscore: '../libs/underscore/underscore',
         handlebars: '../libs/handlebars/handlebars',
-        hbs: '../libs/require-handlebars-plugin/hbs'
+        hbs: '../libs/require-handlebars-plugin/hbs',
+
+        templates: 'templates',
+        routers: 'routes',
+        views: 'views',
+        models: 'models',
+        collections: 'collections'
     },
 
     hbs : {
@@ -35,7 +41,7 @@ require.config({
 
 require([
     'backbone',
-    'routes/router'
+    'routers/router'
 ], function (Backbone, AppRouter) {
     var router = new AppRouter();
     Backbone.history.start();
