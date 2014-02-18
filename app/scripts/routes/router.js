@@ -9,12 +9,15 @@ define([
 
     var AppRouter = Backbone.Router.extend({
         routes: {
-        	"" : "home" 
+        	"" : "home",
+        	"project/new": "new_project" 
         },
         home: function(){
         	var homeVew = new HomeView();
+        },
+        new_project: function(){
+        	var newProjectView()
         }
-
     });
 
     return AppRouter;
