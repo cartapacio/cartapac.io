@@ -2,21 +2,26 @@
 
 define([
     'jquery',
-    'backbone',
-    'views/home'
-], function ($, Backbone, HomeView) {
+    'backbone'
+    //'views/home'
+], function ($, Backbone) {
     'use strict';
 
     var AppRouter = Backbone.Router.extend({
         routes: {
         	"" : "home",
-        	"project/new": "new_project" 
+        	"project": "new_project" 
         },
         home: function(){
-        	var homeVew = new HomeView();
+            require(["views/home"], function(HomeView){
+        	   var homeVew = new HomeView();
+            });
         },
         new_project: function(){
-        	var newProjectView()
+            console.log("new project");
+            require(["views/new_project"], function(NewProjectView){
+        	   var newProjectView = new NewProjectView();
+            });
         }
     });
 
