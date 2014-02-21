@@ -43,6 +43,14 @@ require([
     'backbone',
     'routers/router'
 ], function (Backbone, AppRouter) {
+    var Datastore = requireNode('nedb');
+    
+    global.db = new Datastore({
+        filename : "app/db/cartapacio.db",
+        autoload: true
+    });
+
+    //console.log("db" + db);
     var router = new AppRouter();
     Backbone.history.start();
 });

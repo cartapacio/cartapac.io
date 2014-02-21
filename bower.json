@@ -9,7 +9,8 @@
     "requirejs-text": "~2.0.5",
     "modernizr": "~2.6.2",
     "handlebars": "1.1.2",
-    "require-handlebars-plugin": "~0.7.0"
+    "require-handlebars-plugin": "~0.7.0",
+    "backbone-forms": "~0.14.0"
   },
   "devDependencies": {}
 }

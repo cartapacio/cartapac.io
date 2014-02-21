@@ -19,8 +19,9 @@ define([
         },
         new_project: function(){
             console.log("new project");
-            require(["views/new_project"], function(NewProjectView){
-        	   var newProjectView = new NewProjectView();
+            require(["views/new_project", "models/project"], 
+                function(NewProjectView, ProjectModel){
+        	       var newProjectView = new NewProjectView({model: new ProjectModel()});
             });
         }
     });
