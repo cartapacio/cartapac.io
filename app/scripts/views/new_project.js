@@ -6,8 +6,8 @@ define([
     'backbone',
     'handlebars',
     'models/project',
-    'hbs!templates/project',
-    'hbs!templates/project_form'
+    'hbs!templates/new_project',
+    'hbs!templates/new_project_form'
     //'backbone_forms'
 ], function ($, _, Backbone, Handlebars, ProjectModel, template, form_template) {
     'use strict';
@@ -26,16 +26,10 @@ define([
     			model : this.model,
     			template: form_template
     		}).render();
-    		this.render();
-            /*
-    		this.form.on('submit', function(e){
-                e.preventDefault();
-    			console.log("form submition");
-    		});
-            */      
+    		this.render();      
     	},
     	render: function(){
-            this.$el.html(template);
+            this.$el.html(template({title: 'New project'}));
     		this.$el.append(this.form.el);
     	},
         send: function(e){
