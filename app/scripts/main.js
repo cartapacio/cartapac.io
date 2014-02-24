@@ -23,6 +23,8 @@ require.config({
         underscore: '../libs/underscore/underscore',
         handlebars: '../libs/handlebars/handlebars',
         hbs: '../libs/require-handlebars-plugin/hbs',
+        backbone_forms: '../libs/backbone-forms/distribution.amd/backbone-forms',
+        bootstrap3: 'templates/form_tpl/bootstrap3',
 
         templates: 'templates',
         routers: 'routes',

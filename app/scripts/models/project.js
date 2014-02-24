@@ -10,6 +10,10 @@ define([
         defaults: {
         	//name: "My Portfolio",
         	//author: null
+        },
+        schema: {
+            name : {type: 'Text', validators:['required'] },
+            author: 'Text'
         }
     });
 

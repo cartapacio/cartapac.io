@@ -5,48 +5,48 @@ define([
     'underscore',
     'backbone',
     'handlebars',
-    'hbs!templates/new_project',
-    'models/project'
-], function ($, _, Backbone, Handlebars, template, ProjectModel) {
+    'models/project',
+    'hbs!templates/project',
+    'hbs!templates/project_form'
+    //'backbone_forms'
+], function ($, _, Backbone, Handlebars, ProjectModel, template, form_template) {
     'use strict';
-	        
+
     requireNode('backbone.nedb')(Backbone);
+    
+    var ProjectView = Backbone.View.extend({
 
-    var NewProjectView = Backbone.View.extend({
-        el: "#main",
-        events:{
-        	"submit": "save_project"
+    	el: '#main',
+        events: {
+            'submit': 'send'
         },
-        initialize: function(){
-        	this.render();
-        },
-        render: function(){
-        	this.$el.html(template({title:'New Project'}));
-        },
-
-
-	    //Auxiliar function
-	    getFormData: function(form) { 
-	        var unindexed_array = form.serializeArray();
-	        var indexed_array = {};
-
-	        $.map(unindexed_array, function(n, i){
-	            indexed_array[n['name']] = n['value'];
-	        });
-
-	        return indexed_array;
-	    },
-
-	    save_project: function(e){
+        template: template,
+    	initialize: function(){
+    		this.form = new Backbone.Form({
+    			model : this.model,
+    			template: form_template
+    		}).render();
+    		this.render();
+            /*
+    		this.form.on('submit', function(e){
+                e.preventDefault();
+    			console.log("form submition");
+    		});
+            */      
+    	},
+    	render: function(){
+            this.$el.html(template);
+    		this.$el.append(this.form.el);
+    	},
+        send: function(e){
             e.preventDefault();
-            console.log("saved");
-            //var form_data = JSON.stringify( this.getFormData( this.$el.find('form') ) );
-            var form_data = this.getFormData( this.$el.find('form') );
-            console.log("form data: " + form_data);
+            console.log("saving data");
+            this.form.commit();
+            this.model.save();
+        }
 
-            this.model.save(form_data);
-            return false  
-	    }
+        
     });
-    return NewProjectView;
+
+    return ProjectView;
 });
