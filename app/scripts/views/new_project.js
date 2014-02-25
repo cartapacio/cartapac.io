@@ -6,15 +6,16 @@ define([
     'backbone',
     'handlebars',
     'models/project',
+    'routers/router',
     'hbs!templates/new_project',
     'hbs!templates/new_project_form'
     //'backbone_forms'
-], function ($, _, Backbone, Handlebars, ProjectModel, template, form_template) {
+], function ($, _, Backbone, Handlebars, ProjectModel, AppRouter, template, form_template) {
     'use strict';
 
     requireNode('backbone.nedb')(Backbone);
     
-    var ProjectView = Backbone.View.extend({
+    var NewProjectView = Backbone.View.extend({
 
     	el: '#main',
         events: {
@@ -34,13 +35,16 @@ define([
     	},
         send: function(e){
             e.preventDefault();
-            console.log("saving data");
             this.form.commit();
-            this.model.save();
+            this.model.save({
+                success: function(){
+                    console.log("sucesss: ");
+                }
+            });
+            console.log("model ID: " + this.model.id);
+            //router.navigate("project/" + this.model.id + "/edit", {trigger: true})
         }
-
-        
     });
 
-    return ProjectView;
+    return NewProjectView;
 });

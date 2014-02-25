@@ -12,8 +12,7 @@ define([
         routes: {
         	"" : "home",
         	"project/new": "new_project",
-            "project": "pro",
-            "project/nnew": "ject"
+            "project/:id/edit": "edit_project"
         },
         home: function(){
             require(["views/home"], function(HomeView){
@@ -21,31 +20,15 @@ define([
             });
         },
         new_project: function(){
-            console.log("new project");
-            require(["views/new_project", "models/project"], 
+            require(['views/new_project', 'models/project'], 
                 function(NewProjectView, ProjectModel){
-        	       var newProjectView = new NewProjectView({model: new ProjectModel()});
-                }
-            );
-        },
-        pro: function(){
-            requireNode('backbone.nedb')(Backbone);
-            require(['models/project'], function(ProjectModel){
-
-                var project_model = new ProjectModel();
-                var form = new Backbone.Form({
-                    model: project_model
-                }).render();
-                $('#main').append(form.el);
-            });
-        },
-        ject: function(){
-            require(['views/project', 'models/project'], 
-                function(ProjectView, ProjectModel){
                     var project_model = new ProjectModel();
-                    var project_view = new ProjectView({model: project_model});
+                    var project_view = new NewProjectView({model: project_model});
                 }
             );
+        },
+        edit_project: function(id){
+            console.log( "Edit Project: " + id );
         }
 
     });
