@@ -30,7 +30,9 @@ require.config({
         routers: 'routes',
         views: 'views',
         models: 'models',
-        collections: 'collections'
+        collections: 'collections',
+        config: 'config',
+        utils: 'utils'
     },
 
     hbs : {
@@ -41,14 +43,41 @@ require.config({
     }
 });
 
+//
+
 require([
     'backbone',
-    'routers/router'
-], function (Backbone, AppRouter) {
+    'routers/router',
+    'config/defaults',
+    'utils/check_workspace'
+], function (Backbone, AppRouter, defaults, workspace) {
+    //node libs
     var Datastore = requireNode('nedb');
+    var util = requireNode('util')
+    var path = requireNode('path')
+
+    //check for user working directory
+    var user_space = new workspace(function (success, data){
+        if(!success){
+            util.error(data)    
+        } else {
+            util.debug(data)
+
+            var db_path =  path.resolve(defaults.user_workspace, 'db', defaults.user_db)
+
+            //get or create user database
+            global.user_db = new Datastore({
+                filename : db_path,
+                autoload: true
+            });
+    
+        }
+    })
+
+    var main_db =  path.resolve('app', 'db', defaults.main_db)
     
     global.db = new Datastore({
-        filename : "app/db/cartapacio.db",
+        filename : main_db,
         autoload: true
     });
 
