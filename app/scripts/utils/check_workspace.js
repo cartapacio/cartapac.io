@@ -15,13 +15,13 @@ define([
             if(!exists){
                 fs.mkdir(workspace, function(e){
                     if(e){
-                        callback(false, "error creating workspace :", e)
+                        callback(false, undefined, "error creating workspace :", e)
                     } else {
-                        callback(true, "successfully created workspace")
+                        callback(true, workspace, "successfully created workspace")
                     }
                 })
             } else {
-                callback(true, "workspace present")
+                callback(true, workspace, "workspace present")
             }
         });
     }
