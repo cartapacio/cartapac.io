@@ -57,19 +57,17 @@ require([
     var path = requireNode('path')
 
     //check for user working directory
-    var user_space = new workspace(function (success, path, data){
+    var user_space = new workspace(function (success, w_path, data){
         if(!success){
             util.error(data)    
         } else {
             util.debug(data)
 
-            //export user workspace path
-            global.user_workspace = path
-            
-            //get or create user database
-            var db_path =  path.resolve(defaults.user_workspace, 'db', defaults.user_db)
+            //export user workspace w_path
+            global.user_workspace = w_path
+
             global.user_db = new Datastore({
-                filename : db_path,
+                filename : path.resolve('user', 'db', 'user_db'),
                 autoload: true
             });
     
