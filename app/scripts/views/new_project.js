@@ -36,13 +36,15 @@ define([
         send: function(e){
             e.preventDefault();
             this.form.commit();
-            this.model.save({
-                success: function(){
-                    console.log("sucesss: ");
+            this.model.save();
+
+            this.model.fetch({
+                success: function(mod, res){
+                    console.log("fetched: + "+ mod.id);
+                    router.navigate("project/" + mod.id + "/edit", {trigger: true})
+
                 }
             });
-            console.log("model ID: " + this.model.id);
-            //router.navigate("project/" + this.model.id + "/edit", {trigger: true})
         }
     });
 
