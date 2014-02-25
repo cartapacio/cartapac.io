@@ -28,7 +28,19 @@ define([
             );
         },
         edit_project: function(id){
-            console.log( "Edit Project: " + id );
+            require(['models/project', 'views/edit_project'], 
+                function(ProjectModel, EditProjectView){
+                    var project_model = new ProjectModel();
+                    project_model.fetch({
+                        data: {"_id": id},
+                        success: function(mod){
+                            console.log("Bang: " + mod);
+                            var project_view = new EditProjectView({model: mod});
+
+                        }
+                    });
+
+                });
         }
 
     });
