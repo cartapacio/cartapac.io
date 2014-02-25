@@ -53,6 +53,6 @@ require([
     });
 
     //console.log("db" + db);
-    var router = new AppRouter();
+    window.router = new AppRouter();
     Backbone.history.start();
 });

@@ -7,13 +7,14 @@ define([
     'use strict';
 
     var ProjectModel = Backbone.Model.extend({
+        idAttribute: "_id",
         defaults: {
-        	//name: "My Portfolio",
-        	//author: null
+            type: 'project',
+            objects: []
         },
         schema: {
             name : {type: 'Text', validators:['required'] },
-            author: 'Text'
+            author: 'Text',
         }
     });
 
