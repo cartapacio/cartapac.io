@@ -61,7 +61,8 @@ require([
         if(!success){
             util.error(data)    
         } else {
-            util.debug(data)
+            //util.debug(data)
+            console.error(data);
 
             //export user workspace w_path
             global.user_workspace = w_path
@@ -70,18 +71,19 @@ require([
                 filename : path.resolve('user', 'db', 'user_db'),
                 autoload: true
             });
-    
         }
     })
 
-    var main_db =  path.resolve('app', 'db', defaults.main_db)
-    
+    var main_db =  path.resolve('app', 'db', defaults.main_db);
+
+    //console.log("main db: " + main_db);
+
     global.db = new Datastore({
         filename : main_db,
         autoload: true
     });
 
-    //console.log("db" + db);
+    console.log("db: " + global.db);
     window.router = new AppRouter();
     Backbone.history.start();
 });
