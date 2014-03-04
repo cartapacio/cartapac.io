@@ -18,10 +18,13 @@ define([
     var NewProjectView = Backbone.View.extend({
 
     	el: '#main',
+        
         events: {
             'submit': 'send'
         },
+
         template: template,
+
     	initialize: function(){
     		this.form = new Backbone.Form({
     			model : this.model,
@@ -29,10 +32,12 @@ define([
     		}).render();
     		this.render();      
     	},
+
     	render: function(){
             this.$el.html(template({title: 'New project'}));
     		this.$el.append(this.form.el);
     	},
+
         send: function(e){
             e.preventDefault();
             this.form.commit();
