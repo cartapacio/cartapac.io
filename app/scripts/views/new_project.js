@@ -43,13 +43,14 @@ define([
             this.form.commit();
             this.model.save();
 
-            this.model.fetch({
-                success: function(mod, res){
-                    console.log("fetched: + "+ mod.id);
-                    router.navigate("project/" + mod.id + "/edit", {trigger: true})
+            router.navigate("/", {trigger: true})
+            // this.model.fetch({
+            //     success: function(mod, res){
+            //         console.log("fetched: + "+ mod.id);
+            //         router.navigate("project/" + mod.id + "/edit", {trigger: true})
 
-                }
-            });
+            //     }
+            // });
         }
     });
 

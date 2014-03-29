@@ -22,7 +22,8 @@ define([
         edit: function(e){
             e.preventDefault();
             var id = $(e.currentTarget).data("id")
-            window.router.navigate('#project/'+id+'/edit', {trigger: true})
+            console.log(id)
+            router.navigate('#project/'+id+'/edit', {trigger: true})
         },
 
         delete: function(e){

@@ -27,9 +27,12 @@ define([
     	render: function(){
     		var data = this.model.toJSON();
     		data.title = "Edit Project";
-    		console.log("model: " + JSON.stringify(data));
-    		this.$el.html(template(data));
-            this.$el.append(this.form.el);
+            data.subTitle = data.name
+
+    		//console.log("model: " + JSON.stringify(data));
+
+            this.$el.html(template(data));
+            $('.content').html(this.form.el);
     	},
 
         send: function(e){

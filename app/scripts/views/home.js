@@ -21,7 +21,7 @@ define([
         },
 
         createProject: function(){
-            window.router.navigate("#project/new", {trigger: true});
+            router.navigate("#project/new", {trigger: true});
         },
 
         render: function(){

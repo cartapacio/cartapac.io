@@ -24,6 +24,7 @@ require.config({
         handlebars: '../libs/handlebars/handlebars',
         hbs: '../libs/require-handlebars-plugin/hbs',
         backbone_forms: '../libs/backbone-forms/distribution.amd/backbone-forms',
+        backbone_forms_tpl: '../libs/backbone-forms/distribution.amd/templates/bootstrap3',
         bootstrap3: 'templates/form_tpl/bootstrap3',
 
         templates: 'templates',
@@ -59,7 +60,7 @@ require([
     //check for user working directory
     var user_space = new workspace(function (success, w_path, data){
         if(!success){
-            util.error(data)    
+            util.error(data)
         } else {
             //util.debug(data)
             console.error(data);
