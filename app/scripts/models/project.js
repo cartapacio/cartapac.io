@@ -15,6 +15,9 @@ define([
         schema: {
             name : {type: 'Text', validators:['required'] },
             author: 'Text',
+            ftp_host: 'Text',
+            ftp_user: 'Text',
+            ftp_password: 'Text'
         }
     });
 
