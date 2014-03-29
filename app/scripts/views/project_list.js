@@ -14,6 +14,23 @@ define([
     		this.render();
     	},
 
+        events:{
+            'click .edit' : 'edit',
+            'click .delete' : 'delete'
+        },
+
+        edit: function(e){
+            e.preventDefault();
+            var id = $(e.currentTarget).data("id")
+            window.router.navigate('#project/'+id+'/edit', {trigger: true})
+        },
+
+        delete: function(e){
+            e.preventDefault();
+            var id = $(e.currentTarget).data("id")
+            //TODO
+        },
+
     	render:function(){
     		this.$el.html(template({projects: this.collection.toJSON()}));
     		return this;

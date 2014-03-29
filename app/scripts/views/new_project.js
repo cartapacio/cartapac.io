@@ -14,11 +14,11 @@ define([
     'use strict';
 
     requireNode('backbone.nedb')(Backbone);
-    
+
     var NewProjectView = Backbone.View.extend({
 
     	el: '#main',
-        
+
         events: {
             'submit': 'send'
         },
@@ -30,12 +30,12 @@ define([
     			model : this.model,
     			template: form_template
     		}).render();
-    		this.render();      
+    		this.render();
     	},
 
     	render: function(){
-            this.$el.html(template({title: 'New project'}));
-    		this.$el.append(this.form.el);
+            this.$el.html(template({title: 'New project', subTitle: "Creates a new project"}));
+            $('.content').html(this.form.el)
     	},
 
         send: function(e){
