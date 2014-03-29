@@ -62,8 +62,7 @@ require([
         if(!success){
             util.error(data)
         } else {
-            //util.debug(data)
-            console.error(data);
+            util.debug(data)
 
             //export user workspace w_path
             global.user_workspace = w_path
