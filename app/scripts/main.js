@@ -13,18 +13,19 @@ require.config({
             ],
             exports: 'Backbone'
         },
-        handlebars: {
-            exports: 'Handlebars'
-        }
+        // handlebars: {
+        //     exports: 'Handlebars'
+        // }
     },
     paths: {
         jquery: '../libs/jquery/jquery',
         backbone: '../libs/backbone/backbone',
         underscore: '../libs/underscore/underscore',
-        handlebars: '../libs/handlebars/handlebars',
         hbs: '../libs/require-handlebars-plugin/hbs',
+        handlebars: '../libs/handlebars/handlebars.amd.min',
+        i18nprecompile : "../libs/require-handlebars-plugin/hbs/i18nprecompile",
+        json2 : "../libs/require-handlebars-plugin/hbs/json2",
         backbone_forms: '../libs/backbone-forms/distribution.amd/backbone-forms',
-        backbone_forms_tpl: '../libs/backbone-forms/distribution.amd/templates/bootstrap3',
         bootstrap3: 'templates/form_tpl/bootstrap3',
 
         templates: 'templates',
@@ -36,8 +37,13 @@ require.config({
         utils: 'utils'
     },
 
+    locale: "en_us",
+
     hbs : {
         templateExtension : 'hbs',
+        helpers: true,
+        i18n: true,
+        partialsUrl: '../templates/partials',
         // if disableI18n is `true` it won't load locales and the i18n helper
         // won't work as well.
         disableI18n : false
@@ -50,12 +56,13 @@ require([
     'backbone',
     'routers/router',
     'config/defaults',
-    'utils/check_workspace'
+    'utils/check_workspace',
 ], function (Backbone, AppRouter, defaults, workspace) {
     //node libs
     var Datastore = requireNode('nedb');
     var util = requireNode('util')
     var path = requireNode('path')
+
 
     //check for user working directory
     var user_space = new workspace(function (success, w_path, data){
