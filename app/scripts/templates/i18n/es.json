@@ -1,5 +1,11 @@
 {
    "home" : "inicio",
    "newProject" : "nuevo proyecto",
-   "key1" : "This is key 1, eh?"
+   "FTP_config": "Configuración del FTP",
+   "projects": "Proyectos",
+   "name": "Nombre",
+   "author": "Autor",
+   "actions": "acciones",
+   "edit": "Editar",
+   "delete": "Eliminar"
 }

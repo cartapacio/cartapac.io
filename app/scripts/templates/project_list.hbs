@@ -1,14 +1,14 @@
 <div id="projects" class="widget widget-table">
     <div class="widget-header">
-        <h3><i class="fa fa-table"></i> Projects</h3>
+        <h3><i class="fa fa-table"></i>{{$ "projects"}}</h3>
     </div>
     <div class="widget-content">
         <table class="table table-condensed">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Author</th>
-                    <th>Actions</th>
+                    <th>{{$ "name"}}</th>
+                    <th>{{$ "author"}}</th>
+                    <th>{{$ "actions"}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -17,8 +17,8 @@
                         <td><span class="lead">{{name}}</span></td>
                         <td><span class="lead">{{author}}</span></td>
                         <td>
-                            <button data-id="{{_id}}" class="btn btn-primary edit">Edit</button>
-                            <button data-id="{{_id}}" class="btn btn-danger delete">Delete</button>
+                            <button data-id="{{_id}}" class="btn btn-primary edit">{{$ "edit"}}</button>
+                            <button data-id="{{_id}}" class="btn btn-danger delete">{{$ "delete"}}</button>
                         </td>
                     </tr>
                 {{/each}}

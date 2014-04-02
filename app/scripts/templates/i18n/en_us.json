@@ -1,5 +1,11 @@
 {
    "home" : "home",
    "newProject" : "new project",
-   "key1" : "This is key 1, eh?"
+   "FTP_config": "FTP configuration",
+   "projects": "Projects",
+   "name": "Name",
+   "author": "Author",
+   "actions": "actions",
+   "edit": "Edit",
+   "delete": "Delete"
 }

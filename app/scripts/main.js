@@ -37,6 +37,7 @@ require.config({
         utils: 'utils'
     },
 
+    //TODO: change in runtime this setting
     locale: "en_us",
 
     hbs : {
