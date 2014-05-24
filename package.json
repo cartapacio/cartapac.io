@@ -1,0 +1,25 @@
+{
+  "name": "cartapacio",
+  "version": "0.0.1",
+  "main": "index.html",
+  "window": {
+    "title": "node-webkit demo",
+    "icon": "assets/img/icon.png",
+    "toolbar": false,
+    "frame": true,
+    "width": 1200,
+    "height": 600,
+    "position": "center",
+    "min_width": 1200,
+    "min_height": 600,
+    "max_width": 1200,
+    "max_height": 600
+  },
+  "single-instance": true,
+  "webkit": {
+    "plugin": true
+  },
+  "dependencies": {
+    "cartapacio-server": "0.0.2"
+  }
+}
