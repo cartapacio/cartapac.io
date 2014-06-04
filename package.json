@@ -1,6 +1,6 @@
 {
   "name": "cartapacio",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "index.html",
   "window": {
     "title": "node-webkit demo",
@@ -20,6 +20,10 @@
     "plugin": true
   },
   "dependencies": {
-    "cartapacio-server": "0.0.2"
+    "cartapacio-server": "0.0.8",
+    "async": "^0.9.0",
+    "handlebars": "^2.0.0-alpha.4",
+    "fs-extra": "^0.9.1",
+    "jquery": "^2.1.1"
   }
 }

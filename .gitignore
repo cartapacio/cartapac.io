@@ -27,3 +27,4 @@ build
 
 *.sublime-workspace
 user/
+localConfig.json
